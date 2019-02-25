@@ -1,0 +1,2 @@
+# 2DStateMachineCharacterController
+Experiments with CharacterController based on StateMachine structure
