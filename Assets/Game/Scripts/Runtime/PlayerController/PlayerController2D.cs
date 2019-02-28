@@ -11,6 +11,8 @@ namespace Wokarol.PlayerController
         private Vector3 targetScale = Vector3.one;
         private Quaternion targetRotation;
 
+        // TODO: Add actual logic, player mover with raycasts should probably be in other class
+
         private void FixedUpdate() {
             targetScale = new Vector3(
                 input.Jump ? 0.5f : 1f,
