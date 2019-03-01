@@ -23,19 +23,25 @@ namespace Wokarol.Physics
             }
         }
 
-        public RaycasterHit Sample(Vector2 position) {
+        public RaycasterHit Sample(Vector2 position, float distance, LayerMask mask) {
             // TODO: Implement Sample method
-
-            throw new System.NotImplementedException();
-        }
-
-        public void DebugDraw(Vector3 position) {
-            // TODO: Add color?
+            var hits = new RaycastHit2D[rays.Length];
+            bool hittedAnything = false;
 
             for (int i = 0; i < rays.Length; i++) {
+                RayData ray = rays[i];
+                hits[i] = Physics2D.Raycast(position + ray.offset, ray.direction, distance, mask);
+                hittedAnything = hittedAnything || hits[i].transform != null;
+            }
+
+            return new RaycasterHit(hits, hittedAnything);
+        }
+
+        public void DebugDraw(Vector2 position, Color color, float distanceMultiplier = 1) {
+            for (int i = 0; i < rays.Length; i++) {
                 var ray = rays[i];
-                if (ray.direction == Vector3.zero) continue;
-                Debug.DrawLine(position + ray.offset, position + ray.offset + ray.direction);
+                if (ray.direction == Vector2.zero) continue;
+                Debug.DrawLine(position + ray.offset, position + ray.offset + ray.direction * distanceMultiplier, color);
             }
         }
 

@@ -94,7 +94,9 @@ public class DebugBlockInspector : EditorWindow
         foreach (var data in datas) {
             text += $"\n{(data.Name == "" ? $"----- ":$"{data.Name} :")}\t{data.Value}";
         }
-
+        var style = GUI.skin.GetStyle("HelpBox");
+        style.richText = true;
         EditorGUILayout.HelpBox(text, MessageType.None);
+        style.richText = false;
     }
 }

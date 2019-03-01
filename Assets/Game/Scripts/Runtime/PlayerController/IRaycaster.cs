@@ -4,11 +4,18 @@ namespace Wokarol.Physics
 {
     public interface IRaycaster
     {
-        RaycasterHit Sample(Vector2 position);
+        RaycasterHit Sample(Vector2 position, float distance, LayerMask mask);
     }
 
     public struct RaycasterHit
     {
-        // TODO: Add some values here
+
+        public RaycasterHit(RaycastHit2D[] hits, bool hitted) {
+            Hits = hits;
+            Hitted = hitted;
+        }
+
+        public readonly RaycastHit2D[] Hits;
+        public readonly bool Hitted;
     }
 }
