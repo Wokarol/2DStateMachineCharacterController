@@ -8,7 +8,7 @@ namespace Wokarol.PlayerInput
     {
         public float Horizontal { get; protected set; } = 0;
         public bool Jump { get; protected set; } = false;
-        public bool Sliding { get; protected set; } = false;
+        public bool Crouch { get; protected set; } = false;
 
     }
     public class Key

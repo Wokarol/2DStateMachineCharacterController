@@ -10,12 +10,14 @@ namespace Wokarol.Physics
     public struct RaycasterHit
     {
 
-        public RaycasterHit(RaycastHit2D[] hits, bool hitted) {
-            Hits = hits;
-            Hitted = hitted;
-        }
-
         public readonly RaycastHit2D[] Hits;
         public readonly bool Hitted;
+        public readonly float MaxDistance;
+
+        public RaycasterHit(RaycastHit2D[] hits, bool hitted, float maxDistance) {
+            Hits = hits;
+            Hitted = hitted;
+            MaxDistance = maxDistance;
+        }
     }
 }

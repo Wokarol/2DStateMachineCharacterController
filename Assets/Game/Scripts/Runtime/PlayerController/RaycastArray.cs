@@ -27,14 +27,16 @@ namespace Wokarol.Physics
             // TODO: Implement Sample method
             var hits = new RaycastHit2D[rays.Length];
             bool hittedAnything = false;
+            float maxDist = 0;
 
             for (int i = 0; i < rays.Length; i++) {
                 RayData ray = rays[i];
                 hits[i] = Physics2D.Raycast(position + ray.offset, ray.direction, distance, mask);
                 hittedAnything = hittedAnything || hits[i].transform != null;
+                maxDist = Mathf.Max(maxDist, hits[i].distance);
             }
 
-            return new RaycasterHit(hits, hittedAnything);
+            return new RaycasterHit(hits, hittedAnything, maxDist);
         }
 
         public void DebugDraw(Vector2 position, Color color, float distanceMultiplier = 1) {

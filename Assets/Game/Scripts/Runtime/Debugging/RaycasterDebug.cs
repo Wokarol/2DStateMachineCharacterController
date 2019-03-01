@@ -3,12 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Wokarol.Physics;
+using Wokarol.PlayerInput;
 
 namespace Wokarol
 {
     public class RaycasterDebug : MonoBehaviour
     {
+        [SerializeField] InputData input = null;
+
         public DebugBlock DebugBlock { get; } = new DebugBlock("Raycasting");
+
+        [SerializeField] float maxDist = 0.8f;
+        [SerializeField] float skinWidth = 0.3f;
+        [SerializeField] float raycastOffset = 0.025f;
+        [SerializeField] float speed = 1f;
 
         RaycastArray downArray;
         RaycastArray rightArray;
@@ -16,32 +24,50 @@ namespace Wokarol
         RaycastArray leftArray;
 
         private void Start() {
-            downArray = new RaycastArray(2, 1f, Vector3.down, Vector3.down * 0.5f);
-            rightArray = new RaycastArray(2, 1f, Vector3.right, Vector3.right * 0.5f);
-            upArray = new RaycastArray(1, 1f, Vector3.up, Vector3.up * 0.5f);
-            leftArray = new RaycastArray(2, 1f, Vector3.left, Vector3.left * 0.5f);
+            downArray = new RaycastArray(2, 1f - (raycastOffset * 2), Vector3.down, Vector3.down * (0.5f - skinWidth));
+            rightArray = new RaycastArray(2, 1f - (raycastOffset * 2), Vector3.right, Vector3.right * (0.5f - skinWidth));
+            upArray = new RaycastArray(1, 1f - (raycastOffset * 2), Vector3.up, Vector3.up * (0.5f - skinWidth));
+            leftArray = new RaycastArray(2, 1f - (raycastOffset * 2), Vector3.left, Vector3.left * (0.5f - skinWidth));
 
+            #region DEBUG
             DebugBlock.Define("Down");
             DebugBlock.Define("Up");
             DebugBlock.Define("Left");
             DebugBlock.Define("Right");
+            #endregion
         }
 
         private void Update() {
+
+            Transform t = transform;
+            Vector3 pos = t.position;
+            float perFrameSpeed = Time.deltaTime * speed;
+            t.Move((Vector2.right * (input.Horizontal * perFrameSpeed)) + (Vector2.up * (input.Jump ? perFrameSpeed : 0)) + (Vector2.down * (input.Crouch ? perFrameSpeed : 0)),
+                skinWidth,
+                upArray.Sample(pos, maxDist, int.MaxValue),
+                downArray.Sample(pos, maxDist, int.MaxValue),
+                leftArray.Sample(pos, maxDist, int.MaxValue),
+                rightArray.Sample(pos, maxDist, int.MaxValue));
+
+            #region DEBUG
+            pos = t.position;
             UpdateBlockForRaycaster(downArray, "Down");
             UpdateBlockForRaycaster(upArray, "Up");
             UpdateBlockForRaycaster(leftArray, "Left");
             UpdateBlockForRaycaster(rightArray, "Right");
 
-            downArray?.DebugDraw(transform.position,new Color(93/255f, 173/255f, 27/255f), 0.1f);
-            rightArray?.DebugDraw(transform.position,new Color(93/255f, 173/255f, 27/255f), 0.1f);
-            upArray?.DebugDraw(transform.position,new Color(93/255f, 173/255f, 27/255f), 0.1f);
-            leftArray?.DebugDraw(transform.position,new Color(93/255f, 173/255f, 27/255f), 0.1f);
+            Color color = new Color(0.365f, 0.678f, 0.106f);
+            downArray?.DebugDraw(pos, color, maxDist);
+            rightArray?.DebugDraw(pos, color, maxDist);
+            upArray?.DebugDraw(pos, color, maxDist);
+            leftArray?.DebugDraw(pos, color, maxDist);
 
             void UpdateBlockForRaycaster(IRaycaster raycaster, string name) {
-                var result = raycaster.Sample(transform.position, 0.1f, int.MaxValue);
-                DebugBlock.Change(name, result.Hitted ? "<b><color=#00ffa9>True</color></b>" : "<b><color=#ff6a00>False</color></b>");
+                var result = raycaster.Sample(pos, maxDist, int.MaxValue);
+                string hitted = result.Hitted ? "<b><color=#00ffa9>True</color></b>" : "<b><color=#ff6a00>False</color></b>";
+                DebugBlock.Change(name, $"{hitted}\t{result.MaxDistance.ToString("F3")}");
             }
+            #endregion
         }
-    } 
+    }
 }
