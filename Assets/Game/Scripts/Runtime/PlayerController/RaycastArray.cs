@@ -24,7 +24,6 @@ namespace Wokarol.Physics
         }
 
         public RaycasterHit Sample(Vector2 position, float distance, LayerMask mask) {
-            // TODO: Implement Sample method
             var hits = new RaycastHit2D[rays.Length];
             bool hittedAnything = false;
             float maxDist = 0;

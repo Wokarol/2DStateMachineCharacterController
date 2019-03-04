@@ -11,7 +11,9 @@ namespace Wokarol
     {
         [SerializeField] InputData input = null;
 
-        public DebugBlock DebugBlock { get; } = new DebugBlock("Raycasting");
+        #region DEBUG_BLOCK
+        public DebugBlock DebugBlock { get; } = new DebugBlock("Raycasting"); 
+        #endregion
 
         [SerializeField] float maxDist = 0.8f;
         [SerializeField] float skinWidth = 0.3f;
@@ -29,7 +31,7 @@ namespace Wokarol
             upArray = new RaycastArray(1, 1f - (raycastOffset * 2), Vector3.up, Vector3.up * (0.5f - skinWidth));
             leftArray = new RaycastArray(2, 1f - (raycastOffset * 2), Vector3.left, Vector3.left * (0.5f - skinWidth));
 
-            #region DEBUG
+            #region DEBUG_BLOCK
             DebugBlock.Define("Down");
             DebugBlock.Define("Up");
             DebugBlock.Define("Left");
@@ -49,7 +51,7 @@ namespace Wokarol
                 leftArray.Sample(pos, maxDist, int.MaxValue),
                 rightArray.Sample(pos, maxDist, int.MaxValue));
 
-            #region DEBUG
+            #region DEBUG_BLOCK
             pos = t.position;
             UpdateBlockForRaycaster(downArray, "Down");
             UpdateBlockForRaycaster(upArray, "Up");
