@@ -1,13 +1,12 @@
 {
-    "name": "Tests",
+    "name": "OldCode",
     "references": [
-        "Runtime"
+        "GUID:adf9559b1f2ffbb4485c628ff31dfb24",
+        ""
     ],
-    "optionalUnityReferences": [
-        "TestAssemblies"
-    ],
+    "optionalUnityReferences": [],
     "includePlatforms": [
-        "Editor"
+        "XboxOne"
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

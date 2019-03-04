@@ -1,14 +1,12 @@
 {
-    "name": "Editor",
+    "name": "PlaymodeTests",
     "references": [
-        "Runtime"
+        "GUID:adf9559b1f2ffbb4485c628ff31dfb24"
     ],
     "optionalUnityReferences": [
         "TestAssemblies"
     ],
-    "includePlatforms": [
-        "Editor"
-    ],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
