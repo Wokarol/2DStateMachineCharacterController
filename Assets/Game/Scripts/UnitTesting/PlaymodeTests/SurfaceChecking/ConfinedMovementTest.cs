@@ -91,6 +91,10 @@ public class ConfinedMovementTest
             transform.position = Vector3.zero;
             transform.Move(Vector3.zero, 0.2f, up, down, left, right);
             Assert.AreEqual(-dir * 0.1f, transform.position, $"Transform was moved incorectly with barrier in direction {dir}");
+
+            transform.position = Vector3.zero;
+            transform.Move(dir, 0.2f, up, down, left, right);
+            Assert.AreEqual(-dir * 0.1f, transform.position, $"Transform was moved incorectly with barrier in direction {dir} and with input in same direction");
         }
     }
 
@@ -106,5 +110,28 @@ public class ConfinedMovementTest
         transform.position = Vector3.zero;
         transform.Move(Vector3.zero, 0.2f, barrier, barrier, noBarrier, noBarrier);
         Assert.AreEqual(Vector3.zero, transform.position, $"Transform was moved incorectly when squished from top and down");
+    }
+
+    [Test]
+    public void _06_Move_Goes_Out_Of_Pointy_Corners() {
+        SurfaceCheckerHit noBarrier = new SurfaceCheckerHit(false, 20);
+        SurfaceCheckerHit barrier = new SurfaceCheckerHit(true, 0f);
+
+        Vector3[] allDirections = new Vector3[] {
+            Vector3.up + Vector3.right,
+            Vector3.up + Vector3.left,
+            Vector3.down + Vector3.left,
+            Vector3.down + Vector3.right};
+        for (int i = 0; i < allDirections.Length; i++) {
+            Vector3 dir = allDirections[i];
+            SurfaceCheckerHit up = dir.y > 0 ? barrier : noBarrier;
+            SurfaceCheckerHit down = dir.y < 0 ? barrier : noBarrier;
+            SurfaceCheckerHit left = dir.x < 0 ? barrier : noBarrier;
+            SurfaceCheckerHit right = dir.x > 0 ? barrier : noBarrier;
+
+            transform.position = Vector3.zero;
+            transform.Move(dir, 0.2f, up, down, left, right);
+            Assert.AreEqual(-dir * 0.2f, transform.position, $"Transform was moved incorectly with barrier in direction {dir}");
+        }
     }
 }

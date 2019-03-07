@@ -14,7 +14,7 @@ namespace Wokarol.PlayerControllers
 
         private void Update() {
             Vector2 moveDelta = new Vector2(input.Horizontal * speed, ((input.Jump ? 1 : 0) + (input.Crouch ? -1 : 0)) * speed) * Time.deltaTime;
-            GetSamples(moveDelta, out var rightHit, out var leftHit, out var upHit, out var downHit);
+            GetSamples(moveDelta);
 
             transform.Move(moveDelta, skinWidth, upHit, downHit, leftHit, rightHit);
         }

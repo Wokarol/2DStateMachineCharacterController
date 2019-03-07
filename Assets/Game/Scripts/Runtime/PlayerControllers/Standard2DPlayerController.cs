@@ -26,7 +26,7 @@ namespace Wokarol.PlayerControllers
         Vector2 velocity = new Vector2();
 
         protected override void OnValidate() {
-            base.Start();
+            base.OnValidate();
             RecalculateHiddenValues();
         }
 
@@ -41,7 +41,7 @@ namespace Wokarol.PlayerControllers
         }
 
         private void Update() {
-            GetSamples(velocity, out var rightHit, out var leftHit, out var upHit, out var downHit);
+            GetSamples(velocity);
 
             if (!input.Jump) jumpLastPressed = false;
 
@@ -69,6 +69,7 @@ namespace Wokarol.PlayerControllers
 
             velocity.x = input.Horizontal * speed;
 
+            GetSamples(velocity);
             transform.Move(velocity * Time.deltaTime, skinWidth, upHit, downHit, leftHit, rightHit);
 
             Debug.DrawRay(transform.position, velocity * 0.1f, Color.red);

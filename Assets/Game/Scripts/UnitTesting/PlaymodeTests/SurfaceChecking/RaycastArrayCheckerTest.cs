@@ -7,10 +7,11 @@ using Wokarol.Physics;
 public class RaycastArrayCheckerTest
 {
     RaycastArrayChecker arrayChecker;
+    SurfaceCheckerHit hit = new SurfaceCheckerHit();
 
     [SetUp]
     public void Setup() {
-        arrayChecker = new RaycastArrayChecker(2, 1, Vector3.down);
+        arrayChecker = new RaycastArrayChecker(hit, 2, 1, Vector3.down);
         Assert.AreEqual(0, Object.FindObjectsOfType<Transform>().Length);
     }
 
@@ -33,10 +34,10 @@ public class RaycastArrayCheckerTest
 
     [Test]
     public void _01_Ground_Checker_Hit_Is_Correctly_Defaulted() {
-        var result = arrayChecker.Sample(Vector3.zero, 2, int.MaxValue);
+        arrayChecker.Sample(Vector3.zero, 2, int.MaxValue);
 
-        Assert.AreEqual(false, result.Hitted, $"{nameof(result.Hitted)} is not set to false when no objects are hit");
-        Assert.AreEqual(2, result.ClosestDistance, float.Epsilon, $"{nameof(result.ClosestDistance)} is not set to max distance when no objects are hit");
+        Assert.AreEqual(false, hit.Hitted, $"{nameof(hit.Hitted)} is not set to false when no objects are hit");
+        Assert.AreEqual(2, hit.ClosestDistance, float.Epsilon, $"{nameof(hit.ClosestDistance)} is not set to max distance when no objects are hit");
     }
 
     [Test]
@@ -46,10 +47,10 @@ public class RaycastArrayCheckerTest
         var collider = ob.AddComponent<BoxCollider2D>();
         collider.size = new Vector2(1, 1);
 
-        var result = arrayChecker.Sample(Vector3.zero, 2, int.MaxValue);
+        arrayChecker.Sample(Vector3.zero, 2, int.MaxValue);
 
-        Assert.AreEqual(true, result.Hitted, $"{nameof(result.Hitted)} is not set to true when object is hit");
-        Assert.AreEqual(0.5, result.ClosestDistance, 0.05f, $"{nameof(result.ClosestDistance)} is not set to correct value");
+        Assert.AreEqual(true, hit.Hitted, $"{nameof(hit.Hitted)} is not set to true when object is hit");
+        Assert.AreEqual(0.5, hit.ClosestDistance, 0.05f, $"{nameof(hit.ClosestDistance)} is not set to correct value");
 
         Object.DestroyImmediate(ob);
     }

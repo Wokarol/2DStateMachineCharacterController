@@ -2,12 +2,17 @@
 
 namespace Wokarol.Physics
 {
-    public struct SurfaceCheckerHit
+    public class SurfaceCheckerHit
     {
-        public readonly bool Hitted;
-        public readonly float ClosestDistance;
+        public bool Hitted;
+        public float ClosestDistance;
 
-        public SurfaceCheckerHit(bool hitted, float closestDistance) {
+        public SurfaceCheckerHit(bool hitted = false, float closestDistance = 0) {
+            Hitted = hitted;
+            ClosestDistance = closestDistance;
+        }
+
+        public void Set(bool hitted, float closestDistance) {
             Hitted = hitted;
             ClosestDistance = closestDistance;
         }

@@ -650,11 +650,12 @@ GameObject:
   - component: {fileID: 721135625}
   - component: {fileID: 721135624}
   - component: {fileID: 721135627}
-  - component: {fileID: 721135626}
-  - component: {fileID: 721135628}
   - component: {fileID: 721135629}
   - component: {fileID: 721135630}
-  m_Layer: 0
+  - component: {fileID: 721135628}
+  - component: {fileID: 721135626}
+  - component: {fileID: 721135631}
+  m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -717,7 +718,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 721135623}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 1, z: 0}
+  m_LocalPosition: {x: -6.1523438, y: 3.4609375, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -730,9 +731,9 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 721135623}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cafef3965c364343b6aac396c238994, type: 3}
+  m_Script: {fileID: 11500000, guid: b02f76f15edd4f6408ffa3b088ee6d37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   raysPerSide: 2
@@ -741,7 +742,7 @@ MonoBehaviour:
   baseRayLenght: 0.02
   groundMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 311
   cellingMask:
     serializedVersion: 2
     m_Bits: 55
@@ -749,7 +750,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 55
   input: {fileID: 721135627}
+  jumpHeight: 4
+  timeToJumpApex: 0.4
   speed: 10
+  fallingGravityMultiplier: 1.5
 --- !u!114 &721135627
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -769,7 +773,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 721135623}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4bf344469dc79104ca48ec3326d22564, type: 3}
   m_Name: 
@@ -839,6 +843,33 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &721135631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 721135623}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cafef3965c364343b6aac396c238994, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  raysPerSide: 2
+  raysPerTop: 1
+  skinWidth: 0.02
+  baseRayLenght: 0.02
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  cellingMask:
+    serializedVersion: 2
+    m_Bits: 55
+  wallsMask:
+    serializedVersion: 2
+    m_Bits: 55
+  input: {fileID: 721135627}
+  speed: 10
 --- !u!1 &797400714
 GameObject:
   m_ObjectHideFlags: 0

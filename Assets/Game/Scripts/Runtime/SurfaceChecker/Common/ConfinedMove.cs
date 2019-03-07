@@ -30,7 +30,6 @@ namespace Wokarol.Physics
             if (leftHit.ClosestDistance < skinWidth) {
                 processedDelta.x += -(leftHit.ClosestDistance - skinWidth);
             }
-
             transform.position += (Vector3)processedDelta;
             return processedDelta;
         }
